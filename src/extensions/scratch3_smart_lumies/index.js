@@ -20,10 +20,10 @@ const iconURI = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFAAAABQCAYAAACOE
  * @enum
  */
 const BLEService = {
-	DEVICE_SERVICE: '00001800-0000-1000-8000-00805f9b34fb',
-	BATTERY_SERVICE: '0000180f-0000-1000-8000-00805f9b34fb',
-	COMMAND_SERVICE: '00001120-0000-1000-8000-00805f9b34fb',
-	SENSORS_SERVICE: '00001234-0000-1000-8000-00805f9b34fb'
+    DEVICE_SERVICE: '00001800-0000-1000-8000-00805f9b34fb',
+    BATTERY_SERVICE: '0000180f-0000-1000-8000-00805f9b34fb',
+    COMMAND_SERVICE: '00001120-0000-1000-8000-00805f9b34fb',
+    SENSORS_SERVICE: '00001234-0000-1000-8000-00805f9b34fb'
 };
 
 /**
@@ -43,11 +43,11 @@ const BLEService = {
  * @enum
  */
 const BLECharacteristic = {
-	BATTERY_CHARACTERISTIC: '00002a19-0000-1000-8000-00805f9b34fb',
-	COMMAND_CHARACTERISTIC: '00000005-0000-1000-8000-00805f9b34fb',
-	POSITION_CHARACTERISTIC: '00000004-0000-1000-8000-00805f9b34fb',
-	TOUCH_CHARACTERISTIC: '00000005-0000-1000-8000-00805f9b34fb',
-	UPSIDE_CHARACTERISTIC: '00000007-0000-1000-8000-00805f9b34fb'
+    BATTERY_CHARACTERISTIC: '00002a19-0000-1000-8000-00805f9b34fb',
+    COMMAND_CHARACTERISTIC: '00000005-0000-1000-8000-00805f9b34fb',
+    POSITION_CHARACTERISTIC: '00000004-0000-1000-8000-00805f9b34fb',
+    TOUCH_CHARACTERISTIC: '00000005-0000-1000-8000-00805f9b34fb',
+    UPSIDE_CHARACTERISTIC: '00000007-0000-1000-8000-00805f9b34fb'
 };
 
 /**
@@ -68,42 +68,42 @@ const BLESendRateMax = 20;
  */
 class SmartLumies {
 
-    constructor (runtime, extensionId) {
-		/**
+    constructor(runtime, extensionId) {
+        /**
          * A list of active side colors.
          * @type {string[]}
          * @private
          */
-		this._activeColors = ["unknown", "unknown", "unknown", "unknown", "unknown", "unknown"];
-		
-		/**
+        this._activeColors = ["unknown", "unknown", "unknown", "unknown", "unknown", "unknown"];
+
+        /**
          * A side which is upside.
          * @type {int}
          * @private
          */
-		this._upside = -1;
-		
-		/**
+        this._upside = -1;
+
+        /**
          * A last received touch message.
          * @type {int[]}
          * @private
          */
-		this._lastTouchMessage = [255, 255, 255, 255, 255, 255];
-		
-		/**
+        this._lastTouchMessage = [255, 255, 255, 255, 255, 255];
+
+        /**
          * A list of side touch values.
          * @type {boolean[]}
          * @private
          */
-		this._isSideTouched = [false, false, false, false, false, false];
-		
-		/**
+        this._isSideTouched = [false, false, false, false, false, false];
+
+        /**
          * A battery percentage.
          * @type {int}
          * @private
          */
-		this._battery = -1;
-		
+        this._battery = -1;
+
         /**
          * The Scratch 3.0 runtime used to trigger the green flag button.
          * @type {Runtime}
@@ -135,92 +135,92 @@ class SmartLumies {
 
         this.reset = this.reset.bind(this);
         this._onConnect = this._onConnect.bind(this);
-		this._onBatteryMessage = this._onBatteryMessage.bind(this);
-		this._onUpsideMessage = this._onUpsideMessage.bind(this);
-		this._onTouchMessage = this._onTouchMessage.bind(this);
+        this._onBatteryMessage = this._onBatteryMessage.bind(this);
+        this._onUpsideMessage = this._onUpsideMessage.bind(this);
+        this._onTouchMessage = this._onTouchMessage.bind(this);
     }
-	
-	/**
+
+    /**
      * @return {string[]} - A list of active side colors."
      */
-    get activeColors () {
+    get activeColors() {
         return this._activeColors;
     }
-	
-	/**
+
+    /**
      * @param {string[]} value - A list of active side colors."
      */
-    set activeColors (value) {
+    set activeColors(value) {
         this._activeColors = value;
     }
-	
-	/**
+
+    /**
      * @return {int} - A side which is upside."
      */
-    get upside () {
+    get upside() {
         return this._upside;
     }
 
     /**
      * @param {int} value - A side which is upside."
      */
-    set upside (value) {
+    set upside(value) {
         this._upside = value;
     }
-	
-	/**
+
+    /**
      * @return {int[]} - A last received touch message."
      */
-    get lastTouchMessage () {
+    get lastTouchMessage() {
         return this._lastTouchMessage;
     }
-	
-	/**
+
+    /**
      * @param {int[]} value - A last received touch message."
      */
-    set lastTouchMessage (value) {
+    set lastTouchMessage(value) {
         this._lastTouchMessage = value;
     }
-	
-	/**
+
+    /**
      * @return {boolean[]} - A list of side touch values."
      */
-    get isSideTouched () {
+    get isSideTouched() {
         return this._isSideTouched;
     }
-	
-	/**
+
+    /**
      * @param {boolean[]} value - A list of side touch values."
      */
-    set isSideTouched (value) {
+    set isSideTouched(value) {
         this._isSideTouched = value;
     }
-	
-	/**
+
+    /**
      * @return {int} - A battery percentage."
      */
-    get battery () {
+    get battery() {
         return this._battery;
     }
 
     /**
      * @param {int} value - A battery percentage."
      */
-    set battery (value) {
+    set battery(value) {
         this._battery = value;
     }
-	
-	/**
+
+    /**
      * Called by the runtime when project is stopped?
      */
-    stopAll () {
-		return;
+    stopAll() {
+        return;
     }
 
     /**
      * Called by the runtime when user wants to scan for a Smart Lumies peripheral.
      */
-    scan () {
+    scan() {
         if (this._ble) this._ble.disconnect();
         this._ble = new BLE(this._runtime, this._extensionId, {
             filters: [{
@@ -234,14 +234,14 @@ class SmartLumies {
      * Called by the runtime when user wants to connect to a certain Smart Lumies peripheral.
      * @param {number} id - the id of the peripheral to connect to.
      */
-    connect (id) {
+    connect(id) {
         if (this._ble) this._ble.connectPeripheral(id);
     }
 
     /**
      * Disconnects from the current BLE socket.
      */
-    disconnect () {
+    disconnect() {
         if (this._ble) this._ble.disconnect();
         this.reset();
     }
@@ -249,84 +249,84 @@ class SmartLumies {
     /**
      * Reset all the state.
      */
-    reset () {
-		this.activeColors = ["unknown", "unknown", "unknown", "unknown", "unknown", "unknown"];
-		this.upside = -1;
-		this.lastTouchMessage = [255, 255, 255, 255, 255, 255];
-		this.isSideTouched = [false, false, false, false, false, false];
-		this.battery = -1;
+    reset() {
+        this.activeColors = ["unknown", "unknown", "unknown", "unknown", "unknown", "unknown"];
+        this.upside = -1;
+        this.lastTouchMessage = [255, 255, 255, 255, 255, 255];
+        this.isSideTouched = [false, false, false, false, false, false];
+        this.battery = -1;
     }
 
     /**
      * Called by the runtime to detect whether the Smart Lumies peripheral is connected.
      * @return {boolean} - the connected state.
      */
-    isConnected () {
+    isConnected() {
         if (this._ble) return this._ble.isConnected();
         return false;
     }
-	
-	/**
+
+    /**
      * Write a BLE message to the Smart Lumies peripheral.
      * @param {string} message - the message to write.
      * @return {Promise} - a promise result of the write operation
      */
-	send (message) {
-		if (!this.isConnected() || !this._rateLimiter.okayToSend()) return Promise.resolve();
-		return this._ble.write(
+    send(message) {
+        if (!this.isConnected() || !this._rateLimiter.okayToSend()) return Promise.resolve();
+        return this._ble.write(
             BLEService.COMMAND_SERVICE,
             BLECharacteristic.COMMAND_CHARACTERISTIC,
             Uint8Array.from(Buffer.from(message.substring(2), 'hex')),
         );
-	}
+    }
 
     /**
      * Sets notifications and initial color after BLE has connected.
      * @private
      */
-    _onConnect () {
-		this._ble.read(BLEService.BATTERY_SERVICE, BLECharacteristic.BATTERY_CHARACTERISTIC, true, this._onBatteryMessage);
-		this._ble.read(BLEService.SENSORS_SERVICE, BLECharacteristic.UPSIDE_CHARACTERISTIC, true, this._onUpsideMessage);
-		this._ble.read(BLEService.SENSORS_SERVICE, BLECharacteristic.TOUCH_CHARACTERISTIC, true, this._onTouchMessage);
-		this.send("0x02000011");
+    _onConnect() {
+        this._ble.read(BLEService.BATTERY_SERVICE, BLECharacteristic.BATTERY_CHARACTERISTIC, true, this._onBatteryMessage);
+        this._ble.read(BLEService.SENSORS_SERVICE, BLECharacteristic.UPSIDE_CHARACTERISTIC, true, this._onUpsideMessage);
+        this._ble.read(BLEService.SENSORS_SERVICE, BLECharacteristic.TOUCH_CHARACTERISTIC, true, this._onTouchMessage);
+        this.send("0x02000011");
     }
-	
-	/**
+
+    /**
      * Process battery data from the incoming BLE characteristic.
      * @param {object} base64 - the incoming BLE data.
      * @private
      */
-    _onBatteryMessage (base64) {
+    _onBatteryMessage(base64) {
         const data = Base64Util.base64ToUint8Array(base64);
-		this.battery = data[0];
+        this.battery = data[0];
     }
-	
-	/**
+
+    /**
      * Process upside data from the incoming BLE characteristic.
      * @param {object} base64 - the incoming BLE data.
      * @private
      */
-    _onUpsideMessage (base64) {
+    _onUpsideMessage(base64) {
         const data = Base64Util.base64ToUint8Array(base64);
-		this.upside = data[2];
+        this.upside = data[2];
     }
-	
-	/**
+
+    /**
      * Process touch data from the incoming BLE characteristic.
      * @param {object} base64 - the incoming BLE data.
      * @private
      */
-    _onTouchMessage (base64) {
+    _onTouchMessage(base64) {
         const data = Base64Util.base64ToUint8Array(base64);
-		if (this.lastTouchMessage.every(function(val, idx) { return val == data[idx]})) return;
-		for (let i = 0; i < data.length; i++) {
-			if (data[i] == 0) {
-				this.isSideTouched[i] = true;
-			} else {
-				this.isSideTouched[i] = false;
-			}
-		}
-		this.lastTouchMessage = data;
+        if (this.lastTouchMessage.every(function (val, idx) { return val == data[idx] })) return;
+        for (let i = 0; i < data.length; i++) {
+            if (data[i] == 0) {
+                this.isSideTouched[i] = true;
+            } else {
+                this.isSideTouched[i] = false;
+            }
+        }
+        this.lastTouchMessage = data;
     }
 }
 
@@ -342,9 +342,9 @@ const SmartLumiesColor = {
     BLUE: "blue",
     CYAN: "cyan",
     MAGENTA: "magenta",
-	YELLOW: "yellow",
-	WHITE: "white",
-	OFF: "off"
+    YELLOW: "yellow",
+    WHITE: "white",
+    OFF: "off"
 };
 
 /**
@@ -358,7 +358,7 @@ const SmartLumiesSide = {
     TWO: 2,
     THREE: 3,
     FOUR: 4,
-	FIVE: 5
+    FIVE: 5
 };
 
 
@@ -370,15 +370,15 @@ class Scratch3SmartLumiesBlocks {
     /**
      * @return {string} - the ID of this extension.
      */
-    static get EXTENSION_ID () {
-        return 'SmartLumies';
+    static get EXTENSION_ID() {
+        return 'smartLumies';
     }
 
     /**
      * Construct a set of Smart Lumies blocks.
      * @param {Runtime} runtime - the Scratch 3.0 runtime.
      */
-    constructor (runtime) {
+    constructor(runtime) {
         /**
          * The Scratch 3.0 runtime.
          * @type {Runtime}
@@ -392,7 +392,7 @@ class Scratch3SmartLumiesBlocks {
     /**
      * @returns {object} metadata for this extension and its blocks.
      */
-    getInfo () {
+    getInfo() {
         return {
             id: Scratch3SmartLumiesBlocks.EXTENSION_ID,
             name: 'Smart Lumies',
@@ -415,7 +415,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'setCubeColorRgb',
                     text: formatMessage({
                         id: 'SmartLumies.setCubeColorRgb',
@@ -428,17 +428,17 @@ class Scratch3SmartLumiesBlocks {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         },
-						GREEN: {
+                        GREEN: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         },
-						BLUE: {
+                        BLUE: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         }
                     }
                 },
-				{
+                {
                     opcode: 'setSideColor',
                     text: formatMessage({
                         id: 'SmartLumies.setSideColor',
@@ -447,7 +447,7 @@ class Scratch3SmartLumiesBlocks {
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
-						SIDE: {
+                        SIDE: {
                             type: ArgumentType.NUMBER,
                             menu: 'SIDE',
                             defaultValue: SmartLumiesSide.ZERO
@@ -459,7 +459,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'setSideColorRgb',
                     text: formatMessage({
                         id: 'SmartLumies.setSideColorRgb',
@@ -468,7 +468,7 @@ class Scratch3SmartLumiesBlocks {
                     }),
                     blockType: BlockType.COMMAND,
                     arguments: {
-						SIDE: {
+                        SIDE: {
                             type: ArgumentType.NUMBER,
                             menu: 'SIDE',
                             defaultValue: SmartLumiesSide.ZERO
@@ -477,17 +477,17 @@ class Scratch3SmartLumiesBlocks {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         },
-						GREEN: {
+                        GREEN: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         },
-						BLUE: {
+                        BLUE: {
                             type: ArgumentType.NUMBER,
                             defaultValue: 255
                         }
                     }
                 },
-				{
+                {
                     opcode: 'setSideColors',
                     text: formatMessage({
                         id: 'SmartLumies.setSideColors',
@@ -501,34 +501,34 @@ class Scratch3SmartLumiesBlocks {
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         },
-						COLOR1: {
+                        COLOR1: {
                             type: ArgumentType.STRING,
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         },
-						COLOR2: {
+                        COLOR2: {
                             type: ArgumentType.STRING,
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         },
-						COLOR3: {
+                        COLOR3: {
                             type: ArgumentType.STRING,
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         },
-						COLOR4: {
+                        COLOR4: {
                             type: ArgumentType.STRING,
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         },
-						COLOR5: {
+                        COLOR5: {
                             type: ArgumentType.STRING,
                             menu: 'COLOR',
                             defaultValue: SmartLumiesColor.RED
                         }
                     }
                 },
-				{
+                {
                     opcode: 'setBrightness',
                     text: formatMessage({
                         id: 'SmartLumies.setBrightness',
@@ -543,7 +543,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'getUpside',
                     text: formatMessage({
                         id: 'SmartLumies.getUpside',
@@ -552,7 +552,7 @@ class Scratch3SmartLumiesBlocks {
                     }),
                     blockType: BlockType.REPORTER
                 },
-				{
+                {
                     opcode: 'whenUpside',
                     text: formatMessage({
                         id: 'SmartLumies.whenUpside',
@@ -569,7 +569,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'enableTouch',
                     text: formatMessage({
                         id: 'SmartLumies.enableTouch',
@@ -578,7 +578,7 @@ class Scratch3SmartLumiesBlocks {
                     }),
                     blockType: BlockType.COMMAND
                 },
-				{
+                {
                     opcode: 'disableTouch',
                     text: formatMessage({
                         id: 'SmartLumies.disableTouch',
@@ -587,7 +587,7 @@ class Scratch3SmartLumiesBlocks {
                     }),
                     blockType: BlockType.COMMAND
                 },
-				{
+                {
                     opcode: 'whenTouched',
                     text: formatMessage({
                         id: 'SmartLumies.whenTouched',
@@ -597,7 +597,7 @@ class Scratch3SmartLumiesBlocks {
                     func: 'whenTouched',
                     blockType: BlockType.HAT
                 },
-				{
+                {
                     opcode: 'whenSideTouched',
                     text: formatMessage({
                         id: 'SmartLumies.whenSideTouched',
@@ -614,7 +614,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'whenColorTouched',
                     text: formatMessage({
                         id: 'SmartLumies.whenColorTouched',
@@ -631,7 +631,7 @@ class Scratch3SmartLumiesBlocks {
                         }
                     }
                 },
-				{
+                {
                     opcode: 'getBattery',
                     text: formatMessage({
                         id: 'SmartLumies.getBattery',
@@ -642,7 +642,7 @@ class Scratch3SmartLumiesBlocks {
                 }
             ],
             menus: {
-				COLOR: {
+                COLOR: {
                     acceptReporters: true,
                     items: [
                         {
@@ -659,42 +659,42 @@ class Scratch3SmartLumiesBlocks {
                             }),
                             value: SmartLumiesColor.GREEN
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.BLUE',
                                 default: "blue"
                             }),
                             value: SmartLumiesColor.BLUE
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.CYAN',
                                 default: "cyan"
                             }),
                             value: SmartLumiesColor.CYAN
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.MAGENTA',
                                 default: "magenta"
                             }),
                             value: SmartLumiesColor.MAGENTA
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.YELLOW',
                                 default: "yellow"
                             }),
                             value: SmartLumiesColor.YELLOW
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.WHITE',
                                 default: "white"
                             }),
                             value: SmartLumiesColor.WHITE
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.color.OFF',
                                 default: "off"
@@ -720,28 +720,28 @@ class Scratch3SmartLumiesBlocks {
                             }),
                             value: SmartLumiesSide.ONE
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.side.TWO',
                                 default: 2
                             }),
                             value: SmartLumiesSide.TWO
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.side.THREE',
                                 default: 3
                             }),
                             value: SmartLumiesSide.THREE
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.side.FOUR',
                                 default: 4
                             }),
                             value: SmartLumiesSide.FOUR
                         },
-						{
+                        {
                             text: formatMessage({
                                 id: 'SmartLumies.side.FIVE',
                                 default: 5
@@ -755,314 +755,314 @@ class Scratch3SmartLumiesBlocks {
     }
 
 
-	/**
+    /**
      * Set cube color.
      * @param {object} args - the block's arguments.
      * @property {string} COLOR - color name.
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setCubeColor (args) {
+    setCubeColor(args) {
         this._peripheral.send("0x02" + this._colorNameToHex(args.COLOR));
-		for (let i = 0; i < this._peripheral.activeColors.length; i++) {
-			this._peripheral.activeColors[i] = args.COLOR;
-		}
-		
-		return new Promise(resolve => {
+        for (let i = 0; i < this._peripheral.activeColors.length; i++) {
+            this._peripheral.activeColors[i] = args.COLOR;
+        }
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Set cube color to RGB value.
      * @param {object} args - the block's arguments.
      * @property {int} RED - red value, in the range [0,255].
-	 * @property {int} GREEN - green value, in the range [0,255].
-	 * @property {int} BLUE - blue value, in the range [0,255].
+     * @property {int} GREEN - green value, in the range [0,255].
+     * @property {int} BLUE - blue value, in the range [0,255].
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setCubeColorRgb (args) {
-		const hex = this._colorRgbToHex(args.RED, args.GREEN, args.BLUE);
+    setCubeColorRgb(args) {
+        const hex = this._colorRgbToHex(args.RED, args.GREEN, args.BLUE);
         this._peripheral.send("0x02" + hex);
-		const color = this._hexToColorName(hex);
-		for (let i = 0; i < this._peripheral.activeColors.length; i++) {
-			this._peripheral.activeColors[i] = color;
-		}
-		
-		return new Promise(resolve => {
+        const color = this._hexToColorName(hex);
+        for (let i = 0; i < this._peripheral.activeColors.length; i++) {
+            this._peripheral.activeColors[i] = color;
+        }
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Set side color.
      * @param {object} args - the block's arguments.
-	 * @property {int} SIDE - side, in the range [0,5].
+     * @property {int} SIDE - side, in the range [0,5].
      * @property {string} COLOR - color name.
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setSideColor (args) {
+    setSideColor(args) {
         this._peripheral.send("0x04" + "0" + args.SIDE + this._colorNameToHex(args.COLOR));
-		this._peripheral.activeColors[args.SIDE] = args.COLOR;
-		
-		return new Promise(resolve => {
+        this._peripheral.activeColors[args.SIDE] = args.COLOR;
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Set side color to RGB value.
      * @param {object} args - the block's arguments.
-	 * @property {int} SIDE - side, in the range [0,5].
+     * @property {int} SIDE - side, in the range [0,5].
      * @property {int} RED - red value, in the range [0,255].
-	 * @property {int} GREEN - green value, in the range [0,255].
-	 * @property {int} BLUE - blue value, in the range [0,255].
+     * @property {int} GREEN - green value, in the range [0,255].
+     * @property {int} BLUE - blue value, in the range [0,255].
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setSideColorRgb (args) {
-		const hex = this._colorRgbToHex(args.RED, args.GREEN, args.BLUE);
+    setSideColorRgb(args) {
+        const hex = this._colorRgbToHex(args.RED, args.GREEN, args.BLUE);
         this._peripheral.send("0x04" + "0" + args.SIDE + hex);
-		this._peripheral.activeColors[args.SIDE] = this._hexToColorName(hex);
-		
-		return new Promise(resolve => {
+        this._peripheral.activeColors[args.SIDE] = this._hexToColorName(hex);
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Set side colors.
      * @param {object} args - the block's arguments.
      * @property {string} COLOR0 - color name.
-	 * @property {string} COLOR1 - color name.
-	 * @property {string} COLOR2 - color name.
-	 * @property {string} COLOR3 - color name.
-	 * @property {string} COLOR4 - color name.
-	 * @property {string} COLOR5 - color name.
+     * @property {string} COLOR1 - color name.
+     * @property {string} COLOR2 - color name.
+     * @property {string} COLOR3 - color name.
+     * @property {string} COLOR4 - color name.
+     * @property {string} COLOR5 - color name.
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setSideColors (args) {
+    setSideColors(args) {
         this._peripheral.send("0x03" + this._colorNameToHex(args.COLOR0) + this._colorNameToHex(args.COLOR1) + this._colorNameToHex(args.COLOR2) + this._colorNameToHex(args.COLOR3) + this._colorNameToHex(args.COLOR4) + this._colorNameToHex(args.COLOR5));
-		this._peripheral.activeColors[0] = args.COLOR0;
-		this._peripheral.activeColors[1] = args.COLOR1;
-		this._peripheral.activeColors[2] = args.COLOR2;
-		this._peripheral.activeColors[3] = args.COLOR3;
-		this._peripheral.activeColors[4] = args.COLOR4;
-		this._peripheral.activeColors[5] = args.COLOR5;
-		
-		return new Promise(resolve => {
+        this._peripheral.activeColors[0] = args.COLOR0;
+        this._peripheral.activeColors[1] = args.COLOR1;
+        this._peripheral.activeColors[2] = args.COLOR2;
+        this._peripheral.activeColors[3] = args.COLOR3;
+        this._peripheral.activeColors[4] = args.COLOR4;
+        this._peripheral.activeColors[5] = args.COLOR5;
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Set brightness.
      * @param {object} args - the block's arguments.
      * @property {int} BRIGHTNESS - brightness, in the range [0,100].
      * @return {Promise} - a Promise that resolves after some delay.
      */
-    setBrightness (args) {
-		let brightness = parseInt(args.BRIGHTNESS);
-		if (brightness < 0) brightness = 0;
-		if (brightness > 100) brightness = 100;
-		let brightnessHexValue = brightness.toString(16);
-		if (brightnessHexValue.length == 1) brightnessHexValue = "0" + brightnessHexValue;
+    setBrightness(args) {
+        let brightness = parseInt(args.BRIGHTNESS);
+        if (brightness < 0) brightness = 0;
+        if (brightness > 100) brightness = 100;
+        let brightnessHexValue = brightness.toString(16);
+        if (brightnessHexValue.length == 1) brightnessHexValue = "0" + brightnessHexValue;
         this._peripheral.send("0x15" + brightnessHexValue);
-		
-		return new Promise(resolve => {
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * @return {int} - side which is upside.
      */
-    getUpside () {
-		return this._peripheral.upside;
+    getUpside() {
+        return this._peripheral.upside;
     }
-	
-	/**
+
+    /**
      * Test whether side is upside.
      * @param {object} args - the block's arguments.
      * @property {int} SIDE - side, in the range [0,5].
      * @return {boolean} - true if side is upside.
      */
-    whenUpside (args) {
+    whenUpside(args) {
         return args.SIDE == this._peripheral.upside;
     }
-	
-	/**
+
+    /**
      * Enable touch functionality.
      */
-    enableTouch () {
-		this._peripheral.send("0x0f01");
-		
-		return new Promise(resolve => {
+    enableTouch() {
+        this._peripheral.send("0x0f01");
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Disable touch functionality.
      */
-    disableTouch () {
-		this._peripheral.send("0x0f00");
-		
-		return new Promise(resolve => {
+    disableTouch() {
+        this._peripheral.send("0x0f00");
+
+        return new Promise(resolve => {
             window.setTimeout(() => {
                 resolve();
             }, BLESendInterval);
         });
     }
-	
-	/**
+
+    /**
      * Test whether some side is touched.
      * @return {boolean} - true if any side is touched.
      */
-    whenTouched () {
+    whenTouched() {
         return this._peripheral.isSideTouched.includes(true);
     }
-	
-	/**
+
+    /**
      * Test whether side is touched.
      * @param {object} args - the block's arguments.
      * @property {int} SIDE - side, in the range [0,5].
      * @return {boolean} - true if side is touched.
      */
-    whenSideTouched (args) {
+    whenSideTouched(args) {
         return this._peripheral.isSideTouched[args.SIDE];
     }
-	
-	/**
+
+    /**
      * Test whether color is touched.
      * @param {object} args - the block's arguments.
      * @property {string} COLOR - color name.
      * @return {boolean} - true if color is touched.
      */
-    whenColorTouched (args) {
-		for (let i = 0; i < this._peripheral.isSideTouched.length; i++) {
-			if (this._peripheral.isSideTouched[i] && this._peripheral.activeColors[i] == args.COLOR) return true;
-		}
+    whenColorTouched(args) {
+        for (let i = 0; i < this._peripheral.isSideTouched.length; i++) {
+            if (this._peripheral.isSideTouched[i] && this._peripheral.activeColors[i] == args.COLOR) return true;
+        }
         return false;
     }
-		
+
     /**
      * @return {int} - battery percentage.
      */
-    getBattery () {
-		return this._peripheral.battery;
+    getBattery() {
+        return this._peripheral.battery;
     }
-	
-	/**
+
+    /**
      * Convert color name to hex value.
      * @param {string} name - color name.
      * @return {string} - hex value.
-	 * @private
+     * @private
      */
-	_colorNameToHex (name) {
-		let hex = "000000"
-		switch (name) {
-			case "red":
-				hex = "ff0000";
-				break;
-			case "green":
-				hex = "00ff00";
-				break;
-			case "blue":
-				hex = "0000ff";
-				break;
-			case "cyan":
-				hex = "00ffff";
-				break;
-			case "magenta":
-				hex = "ff00ff";
-				break;
-			case "yellow":
-				hex = "ffff00";
-				break;
-			case "white":
-				hex = "ffffff";
-				break;
-			case "off":
-				hex = "000000";
-		}
-		return hex;
-	}
-	
-	/**
+    _colorNameToHex(name) {
+        let hex = "000000"
+        switch (name) {
+            case "red":
+                hex = "ff0000";
+                break;
+            case "green":
+                hex = "00ff00";
+                break;
+            case "blue":
+                hex = "0000ff";
+                break;
+            case "cyan":
+                hex = "00ffff";
+                break;
+            case "magenta":
+                hex = "ff00ff";
+                break;
+            case "yellow":
+                hex = "ffff00";
+                break;
+            case "white":
+                hex = "ffffff";
+                break;
+            case "off":
+                hex = "000000";
+        }
+        return hex;
+    }
+
+    /**
      * Convert RGB value to hex value.
      * @param {int} red - red value.
-	 * @param {int} green - green value.
-	 * @param {int} blue - blue value.
+     * @param {int} green - green value.
+     * @param {int} blue - blue value.
      * @return {string} - hex value.
-	 * @private
+     * @private
      */
-	_colorRgbToHex (red, green, blue) {
-		let redValue = parseInt(red);
-		if (redValue < 0) redValue = 0;
-		if (redValue > 255) redValue = 255;
-		let redHexValue = redValue.toString(16);
-		if (redHexValue.length == 1) redHexValue = "0" + redHexValue;
-		let greenValue = parseInt(green);
-		if (greenValue < 0) greenValue = 0;
-		if (greenValue > 255) greenValue = 255;
-		let greenHexValue = greenValue.toString(16);
-		if (greenHexValue.length == 1) greenHexValue = "0" + greenHexValue;
-		let blueValue = parseInt(blue);
-		if (blueValue < 0) blueValue = 0;
-		if (blueValue > 255) blueValue = 255;
-		let blueHexValue = blueValue.toString(16);
-		if (blueHexValue.length == 1) blueHexValue = "0" + blueHexValue;
-		return redHexValue + greenHexValue + blueHexValue;
-	}
-	
-	/**
+    _colorRgbToHex(red, green, blue) {
+        let redValue = parseInt(red);
+        if (redValue < 0) redValue = 0;
+        if (redValue > 255) redValue = 255;
+        let redHexValue = redValue.toString(16);
+        if (redHexValue.length == 1) redHexValue = "0" + redHexValue;
+        let greenValue = parseInt(green);
+        if (greenValue < 0) greenValue = 0;
+        if (greenValue > 255) greenValue = 255;
+        let greenHexValue = greenValue.toString(16);
+        if (greenHexValue.length == 1) greenHexValue = "0" + greenHexValue;
+        let blueValue = parseInt(blue);
+        if (blueValue < 0) blueValue = 0;
+        if (blueValue > 255) blueValue = 255;
+        let blueHexValue = blueValue.toString(16);
+        if (blueHexValue.length == 1) blueHexValue = "0" + blueHexValue;
+        return redHexValue + greenHexValue + blueHexValue;
+    }
+
+    /**
      * Convert hex value to color name.
      * @param {string} hex - hex value.
      * @return {string} - color name.
-	 * @private
+     * @private
      */
-	_hexToColorName (hex) {
-		let colorName = "unknown"
-		switch (hex) {
-			case "ff0000":
-				colorName = "red";
-				break;
-			case "00ff00":
-				colorName = "green";
-				break;
-			case "0000ff":
-				colorName = "blue";
-				break;
-			case "00ffff":
-				colorName = "cyan";
-				break;
-			case "ff00ff":
-				colorName = "magenta";
-				break;
-			case "ffff00":
-				colorName = "yellow";
-				break;
-			case "ffffff":
-				colorName = "white";
-				break;
-			case "000000":
-				colorName = "off";
-		}
-		return colorName;
-	}
+    _hexToColorName(hex) {
+        let colorName = "unknown"
+        switch (hex) {
+            case "ff0000":
+                colorName = "red";
+                break;
+            case "00ff00":
+                colorName = "green";
+                break;
+            case "0000ff":
+                colorName = "blue";
+                break;
+            case "00ffff":
+                colorName = "cyan";
+                break;
+            case "ff00ff":
+                colorName = "magenta";
+                break;
+            case "ffff00":
+                colorName = "yellow";
+                break;
+            case "ffffff":
+                colorName = "white";
+                break;
+            case "000000":
+                colorName = "off";
+        }
+        return colorName;
+    }
 }
 
 module.exports = Scratch3SmartLumiesBlocks;

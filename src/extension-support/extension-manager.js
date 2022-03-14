@@ -24,7 +24,8 @@ const builtinExtensions = {
     makeymakey: () => require('../extensions/scratch3_makeymakey'),
     boost: () => require('../extensions/scratch3_boost'),
     gdxfor: () => require('../extensions/scratch3_gdx_for'),
-    smartLumies: () => require('../extensions/scratch3_smart_lumies')
+    smartLumies: () => require('../extensions/scratch3_smart_lumies'),
+    griffpatch: () => require('../extensions/scratch3_physics')
 };
 
 /**
