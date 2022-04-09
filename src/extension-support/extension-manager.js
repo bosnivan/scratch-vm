@@ -25,7 +25,8 @@ const builtinExtensions = {
     boost: () => require('../extensions/scratch3_boost'),
     gdxfor: () => require('../extensions/scratch3_gdx_for'),
     smartLumies: () => require('../extensions/scratch3_smart_lumies'),
-    griffpatch: () => require('../extensions/scratch3_physics')
+    griffpatch: () => require('../extensions/scratch3_physics'),
+    matatabot: () => require('../extensions/scratch3_matatabot')
 };
 
 /**
