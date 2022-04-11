@@ -28,7 +28,8 @@ const builtinExtensions = {
     http: () => require('../extensions/scratch3_http'),
     griffpatch: () => require('../extensions/scratch3_physics'),
     matatabot: () => require('../extensions/scratch3_matatabot'),
-    midi: () => require('../extensions/scratch3_midi')
+    midi: () => require('../extensions/scratch3_midi'),
+    spikePrime: () => require('../extensions/scratch3_spike_prime'),
 };
 
 /**
