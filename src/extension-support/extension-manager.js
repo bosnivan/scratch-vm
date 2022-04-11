@@ -27,7 +27,8 @@ const builtinExtensions = {
     smartLumies: () => require('../extensions/scratch3_smart_lumies'),
     http: () => require('../extensions/scratch3_http'),
     griffpatch: () => require('../extensions/scratch3_physics'),
-    matatabot: () => require('../extensions/scratch3_matatabot')
+    matatabot: () => require('../extensions/scratch3_matatabot'),
+    midi: () => require('../extensions/scratch3_midi')
 };
 
 /**
