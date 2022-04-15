@@ -31,6 +31,7 @@ const builtinExtensions = {
     midi: () => require('../extensions/scratch3_midi'),
     spikePrime: () => require('../extensions/scratch3_spike_prime'),
     futureBoard: () => require('../extensions/scratch3_future_board'),
+    minecraft: () => require('../extensions/scratch3_minecraft'),
 };
 
 /**
