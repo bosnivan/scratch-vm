@@ -33,6 +33,7 @@ const builtinExtensions = {
     futureBoard: () => require('../extensions/scratch3_future_board'),
     minecraft: () => require('../extensions/scratch3_minecraft'),
     toolbox: () => require('../extensions/scratch3_toolbox'),
+    iCarPro: () => require('../extensions/scratch3_icar_pro'),
 };
 
 /**
