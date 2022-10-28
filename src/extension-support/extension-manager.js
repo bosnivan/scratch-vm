@@ -34,6 +34,7 @@ const builtinExtensions = {
     minecraft: () => require('../extensions/scratch3_minecraft'),
     toolbox: () => require('../extensions/scratch3_toolbox'),
     iCarPro: () => require('../extensions/scratch3_icar_pro'),
+    snapCircuitsU33: () => require('../extensions/scratch3_snap_circuits_u33'),
 };
 
 /**
