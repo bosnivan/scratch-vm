@@ -14,14 +14,13 @@ class FutureBoard {
 	constructor(runtime) {
 		this.runtime = runtime
 		if (window.location.protocol == "https:") {
-			alert("Unfortunately, this extension won't work because Future Board uses WS protocol, which isn't compatible with the HTTPS protocol you're using to access Scratch++.")
+			alert("You're using secure HTTPS protocol to access Scratch++ and your browser will probably block access to Future Board because it's using insecure WS protocol. If you want to use this extension you must enable mixed content in your browser.")
 		}
 	}
 
 	ws_onopen(event) {
 		isConnected = true;
 		console.log("[FB] Connected.");
-
 	}
 
 	ws_onmessage(event) {
@@ -92,7 +91,7 @@ class FutureBoard {
 					arguments: {
 						ip: {
 							type: "string",
-							defaultValue: "192.168.1.7"
+							defaultValue: "192.168.1.2"
 						}
 					}
 				},
@@ -513,8 +512,19 @@ class FutureBoard {
 		};
 	}
 
-	connect({ ip }) {
-		this.ws_connect(ip)
+	connect({ ip }, util) {
+		if (!this.waitingForResponse) {
+			this.waitingForResponse = true
+			this.ws_connect(ip)
+			output = null
+			setTimeout(function () { output = 1 }, 1000);
+		}
+		if (output == null) {
+			util.yield();
+		} else {
+			this.waitingForResponse = false
+			this.ws_send("buzzer.melody(CORRECT)")
+		}
 	}
 
 	disconnect() {
